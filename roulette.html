@@ -1,0 +1,55 @@
+<html>
+<table id="rouletteTable">
+    <thead>
+        <th>N</th>
+        <th>Amount Betted</th>
+        <th>Payoff</th>
+        <th>Accumulated Amount</th>
+        <th>Probability</th>
+        <th>10 times</th>
+        <th>100 times</th>
+        <th>1000 times</th>
+        <th>10000 times</th>
+    </thead>
+    </thead>0
+    <tbody>
+    </tbody>
+</table>
+</html>
+
+<script>
+    let betNumber = 0;
+    let amountBetted = 1;
+    let minPayoff = 10;
+    let basePayoff = 35;
+    let accumulatedAmount = 0;
+    let baseRoundLossProbability = 36/37;
+    let currentRoundLossProbability = 1;
+    let currentWinProbability = 0;
+
+    var table = document.getElementById("rouletteTable");
+
+    while (currentWinProbability < 0.9999) {
+        betNumber ++;
+        while ((amountBetted*basePayoff - (accumulatedAmount + amountBetted)) <= betNumber) {
+            amountBetted ++;
+        }
+        accumulatedAmount += amountBetted;
+
+        currentRoundLossProbability = baseRoundLossProbability ** betNumber;
+        currentWinProbability = 1 - currentRoundLossProbability;
+
+        let row = table.insertRow(-1);
+        row.insertCell(0).innerHTML = betNumber;
+        row.insertCell(1).innerHTML = amountBetted;
+        row.insertCell(2).innerHTML = basePayoff*amountBetted - accumulatedAmount;
+        row.insertCell(3).innerHTML = accumulatedAmount;
+        row.insertCell(4).innerHTML = currentWinProbability;
+        row.insertCell(5).innerHTML = Math.pow(currentWinProbability,10);
+        row.insertCell(6).innerHTML = Math.pow(currentWinProbability,100);
+        row.insertCell(7).innerHTML = Math.pow(currentWinProbability,1000);
+        row.insertCell(8).innerHTML = Math.pow(currentWinProbability,10000);
+
+    }
+   
+</script>
